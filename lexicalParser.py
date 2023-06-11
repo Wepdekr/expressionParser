@@ -1,51 +1,53 @@
-class lexicalParser:
-    def __init__(self):
-        self.__data = []
-    
-    def parser(self, path):
-        expression = ''
-        with open(path, 'r') as f:
-            content = f.read()
-            expression = content
-            f.close()
-        l = len(expression)
-        tmp = ''
-        for i in range(0, l):
-            if expression[i] == ' ':
-                continue
-            elif i > 0 and not expression[i].isdigit():
-                tmp = tmp + ' ' + expression[i]
-            elif i > 0 and expression[i].isdigit() != expression[i - 1].isdigit():
-                tmp = tmp + ' ' + expression[i]
-            else:
-                tmp = tmp + expression[i]
-        VtList = tmp.split(' ')
-        for Vn in VtList:
-            if Vn.isdigit():
-                self.__data.append((Vn, 'digit'))
-            elif Vn.isalpha():
-                self.__data.append((Vn, 'letter'))
-            elif Vn == '+':
-                self.__data.append((Vn, 'plus'))
-            elif Vn == '-':
-                self.__data.append((Vn, 'minus'))
-            elif Vn == '*':
-                self.__data.append((Vn, 'multiply'))
-            elif Vn == '/':
-                self.__data.append((Vn, 'divide'))
-            elif Vn == '^':
-                self.__data.append((Vn, 'power'))
-            elif Vn == '(':
-                self.__data.append((Vn, 'leftparen'))
-            elif Vn == ')':
-                self.__data.append((Vn, 'rightparen'))
-            elif Vn == '.':
-                self.__data.append((Vn, 'dot'))
-            else:
-                print('Error')
-                break
+import ply.lex as lex
 
-        return VtList
+tokens = (
+    'DIGIT',
+    'PLUS',
+    'MINUS',
+    'MULTIPLY',
+    'DIVIDE',
+    'POWER',
+    'LPAREN',
+    'RPAREN',
+    'DOT',
+    'LETTER'
+)
+
+t_PLUS       = r'\+'
+t_MINUS      = r'-'
+t_MULTIPLY   = r'\*'
+t_DIVIDE     = r'/'
+t_POWER      = r'\^'
+t_LPAREN     = r'\('
+t_RPAREN     = r'\)'
+t_DOT        = r'\.'
+t_LETTER     = r'[a-z]'
+
+def t_DIGIT(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
+
+def t_error(t):
+    if t.value[0] != ' ':
+        print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
+
+lexer = lex.lex()
+
+
+class lexicalParser:
+    def __init__(self) -> None:
+        pass
     
-    def getData(self):
-        return self.__data
+    def parser(self, expression):
+        lexer.input(expression)
+
+        ret = []
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break
+            ret.append(tok)
+        
+        return ret
