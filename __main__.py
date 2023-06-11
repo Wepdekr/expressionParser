@@ -6,7 +6,8 @@ def main():
     Lparser = lexicalParser.lexicalParser()
     VtList = Lparser.parser(path=path)
     data = Lparser.getData()
-    syntacticParser.parser(VtList=VtList)
+    Sparser = syntacticParser.syntacticParser()
+    Sparser.parser(VtList=VtList)
 
 if __name__ == '__main__':
     main()
