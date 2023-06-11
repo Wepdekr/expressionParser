@@ -1,0 +1,13 @@
+( leftparen
+12 digit
++ plus
+3 digit
+- minus
+4 digit
+) rightparen
+* multiply
+56 digit
+/ divide
+7 digit
+^ power
+8 digit
