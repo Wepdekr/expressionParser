@@ -1,46 +1,51 @@
-def parser(path):
-    expression = ''
-    with open(path, 'r') as f:
-        content = f.read()
-        expression = content
-        f.close()
-    l = len(expression)
-    tmp = ''
-    for i in range(0, l):
-        if expression[i] == ' ':
-            continue
-        elif i > 0 and not expression[i].isdigit():
-            tmp = tmp + ' ' + expression[i]
-        elif i > 0 and expression[i].isdigit() != expression[i - 1].isdigit():
-            tmp = tmp + ' ' + expression[i]
-        else:
-            tmp = tmp + expression[i]
-    VtList = tmp.split(' ')
-    # print(list)
-    with open('lexicalParser_out.txt', 'w') as w:
+class lexicalParser:
+    def __init__(self):
+        self.__data = []
+    
+    def parser(self, path):
+        expression = ''
+        with open(path, 'r') as f:
+            content = f.read()
+            expression = content
+            f.close()
+        l = len(expression)
+        tmp = ''
+        for i in range(0, l):
+            if expression[i] == ' ':
+                continue
+            elif i > 0 and not expression[i].isdigit():
+                tmp = tmp + ' ' + expression[i]
+            elif i > 0 and expression[i].isdigit() != expression[i - 1].isdigit():
+                tmp = tmp + ' ' + expression[i]
+            else:
+                tmp = tmp + expression[i]
+        VtList = tmp.split(' ')
         for Vn in VtList:
             if Vn.isdigit():
-                print(Vn, 'digit', file=w)
+                self.__data.append((Vn, 'digit'))
             elif Vn.isalpha():
-                print(Vn, 'letter', file=w)
+                self.__data.append((Vn, 'letter'))
             elif Vn == '+':
-                print(Vn, 'plus', file=w)
+                self.__data.append((Vn, 'plus'))
             elif Vn == '-':
-                print(Vn, 'minus', file=w)
+                self.__data.append((Vn, 'minus'))
             elif Vn == '*':
-                print(Vn, 'multiply', file=w)
+                self.__data.append((Vn, 'multiply'))
             elif Vn == '/':
-                print(Vn, 'divide', file=w)
+                self.__data.append((Vn, 'divide'))
             elif Vn == '^':
-                print(Vn, 'power', file=w)
+                self.__data.append((Vn, 'power'))
             elif Vn == '(':
-                print(Vn, 'leftparen', file=w)
+                self.__data.append((Vn, 'leftparen'))
             elif Vn == ')':
-                print(Vn, 'rightparen', file=w)
+                self.__data.append((Vn, 'rightparen'))
             elif Vn == '.':
-                print(Vn, 'dot', file=w)
+                self.__data.append((Vn, 'dot'))
             else:
                 print('Error')
                 break
-        w.close()
-    return VtList
+
+        return VtList
+    
+    def getData(self):
+        return self.__data
