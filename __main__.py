@@ -16,16 +16,15 @@ def main():
     # print(tokens[0].value, tokens[0].type)
     
     letterList = getLetterList.getLetterList().getList(tokens=tokens)
-    print(letterList)
+    # print(letterList)
     
     letters.modifyLetterList(letters=letterList, vals=[2])
-    for i in letterList:
-        print(letters.getMap(i))
+    # for i in letterList:
+    #     print(letters.getMap(i))
     
     Sparser = syntacticParser.syntacticParser()
-    result = Sparser.parse(expression=s)
+    result = Sparser.getValue(expression=s)
     print(result)
-    
 
 if __name__ == '__main__':
     main()
