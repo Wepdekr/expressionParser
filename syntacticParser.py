@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 
 from lexicalParser import tokens
-from getLetter import map
+from modifyLetterVal import letters
 
 def p_binary_operators(p):
     '''expression : expression PLUS term
@@ -39,9 +39,9 @@ def p_indentifier(p):
                   | DIGIT LETTER'''
     # print(p[1], p[2])
     if len(p) == 2:
-        p[0] = map[p[1]]
+        p[0] = letters.getMap(p[1])
     else:
-        p[0] = p[1] * map[p[2]]
+        p[0] = p[1] * letters.getMap(p[2])
     # print(p[0])
 
 def p_real_digit(p):

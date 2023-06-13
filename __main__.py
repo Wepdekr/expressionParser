@@ -1,6 +1,7 @@
-import getLetter
 import lexicalParser
 import syntacticParser
+import getLetterList
+from modifyLetterVal import letters
 
 
 def main():
@@ -11,13 +12,15 @@ def main():
         f.close()
     Lparser = lexicalParser.lexicalParser()
     tokens = Lparser.parser(expression=s)
-    for i in tokens:
-        if i.type == 'LETTER':
-            x = input('%s = ' % i.value[0])
-            getLetter.modify(i.value[0], int(x))
-
     print(tokens)
     # print(tokens[0].value, tokens[0].type)
+    
+    letterList = getLetterList.getLetterList().getList(tokens=tokens)
+    print(letterList)
+    
+    letters.modifyLetterList(letters=letterList, vals=[2])
+    for i in letterList:
+        print(letters.getMap(i))
     
     Sparser = syntacticParser.syntacticParser()
     result = Sparser.parse(expression=s)
