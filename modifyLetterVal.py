@@ -14,3 +14,4 @@ class letterVals:
         return self.map[letter]
 
 letters = letterVals()
+letters.modify(letter='x', val=2)
